@@ -8,6 +8,8 @@ import mimetypes
 import os
 import socket
 import sys
+import webbrowser
+import threading
 
 
 HOST = "127.0.0.1"
@@ -439,6 +441,10 @@ def main():
 
     httpd = ThreadingHTTPServer((HOST, PORT), LocalProxyHandler)
     print(f"本地服务已启动：http://localhost:{PORT}")
+    threading.Timer(
+        0.5,
+        lambda: webbrowser.open(f"http://localhost:{PORT}")
+    ).start()
     print("按 Ctrl+C 停止服务。")
     try:
         httpd.serve_forever()
